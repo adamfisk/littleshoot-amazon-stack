@@ -9,11 +9,17 @@
 
 package org.lastbamboo.common.amazon.stack;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
+import java.util.Properties;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -21,6 +27,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.httpclient.Header;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -103,6 +110,66 @@ public class AmazonWsUtils
             {
             LOG.error("Could not find encoding?", e);
             throw new RuntimeException("Could not url encode to UTF-8", e);
+            }
+        }
+
+    public static String getAccessKey() throws IOException
+        {
+        final Properties props = locatePropsFile();
+        final String prop = props.getProperty("accessKey");
+        if (StringUtils.isBlank(prop))
+            {
+            throw new IOException("Could not find access key");
+            }
+        return prop;
+        }
+
+    public static String getAccessKeyId() throws IOException
+        {
+        final Properties props = locatePropsFile();
+        final String prop = props.getProperty("accessKeyId");
+        if (StringUtils.isBlank(prop))
+            {
+            throw new IOException("Could not find access key ID");
+            }
+        return prop;
+        }
+    
+    private static Properties locatePropsFile() throws IOException
+        {
+        final File home = 
+            new File(System.getProperty("user.home"), ".littleshoot/littleshoot.properties");
+        if (home.isFile())
+            {
+            return createPropsFile(home);
+            }
+        final File etc = new File("/etc/littleshoot/littleshoot.properties");
+        if (etc.isFile())
+            {
+            return createPropsFile(etc);
+            }
+        throw new IOException("Could not find props file");
+        }
+
+    private static Properties createPropsFile(final File file) throws IOException
+        {
+        final Properties props = new Properties();
+        final InputStream is = new FileInputStream(file);
+        props.load(is);
+        return props;
+        }
+
+    public static boolean hasPropsFile()
+        {
+        try
+            {
+            locatePropsFile();
+            return true;
+            }
+        catch (final IOException e)
+            {
+            LOG.debug("No props file found", e);
+            return false;
             }
         }
     }
