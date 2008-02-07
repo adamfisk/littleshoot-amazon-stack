@@ -11,23 +11,19 @@ package org.lastbamboo.common.amazon.stack;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Iterator;
 import java.util.Properties;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.httpclient.Header;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -137,8 +133,9 @@ public class AmazonWsUtils
     
     private static Properties locatePropsFile() throws IOException
         {
+        final File lsDir = new File(SystemUtils.USER_HOME, ".littleshoot");
         final File home = 
-            new File(System.getProperty("user.home"), ".littleshoot/littleshoot.properties");
+            new File(lsDir, "littleshoot.properties");
         if (home.isFile())
             {
             return createPropsFile(home);
