@@ -134,8 +134,7 @@ public class AmazonWsUtils
     private static Properties locatePropsFile() throws IOException
         {
         final File lsDir = new File(SystemUtils.USER_HOME, ".littleshoot");
-        final File home = 
-            new File(lsDir, "littleshoot.properties");
+        final File home = new File(lsDir, "littleshoot.properties");
         if (home.isFile())
             {
             return createPropsFile(home);
