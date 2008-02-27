@@ -59,10 +59,12 @@ public class AwsUtils
             {
             return createPropsFile(etc);
             }
-        throw new IOException("Could not find props file");
+        throw new IOException(
+            "Could not find props file in "+lsDir+" or in "+home);
         }
 
-    private static Properties createPropsFile(final File file) throws IOException
+    private static Properties createPropsFile(final File file) 
+        throws IOException
         {
         final Properties props = new Properties();
         final InputStream is = new FileInputStream(file);
