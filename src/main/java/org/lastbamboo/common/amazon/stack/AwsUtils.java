@@ -26,22 +26,31 @@ public class AwsUtils
     
     public static String getAccessKey() throws IOException
         {
-        final Properties props = locatePropsFile();
-        final String prop = props.getProperty("accessKey");
-        if (StringUtils.isBlank(prop))
-            {
-            throw new IOException("Could not find access key");
-            }
-        return prop;
+        return getStringValue("accessKey");
         }
 
     public static String getAccessKeyId() throws IOException
         {
+        return getStringValue("accessKeyId");
+        }
+    
+    public static String getUrlBase() throws IOException 
+        {
+        return getStringValue("urlBase");
+        }
+    
+    public static String getSecureUrlBase() throws IOException 
+        {
+        return getStringValue("secureUrlBase");
+        }
+    
+    private static String getStringValue(final String key) throws IOException 
+        {
         final Properties props = locatePropsFile();
-        final String prop = props.getProperty("accessKeyId");
+        final String prop = props.getProperty(key);
         if (StringUtils.isBlank(prop))
             {
-            throw new IOException("Could not find access key ID");
+            throw new IOException("Could not find access key");
             }
         return prop;
         }
