@@ -50,7 +50,7 @@ public class AwsUtils
         final String prop = props.getProperty(key);
         if (StringUtils.isBlank(prop))
             {
-            throw new IOException("Could not find access key");
+            throw new IOException("Could not find value for key: "+key);
             }
         return prop;
         }
