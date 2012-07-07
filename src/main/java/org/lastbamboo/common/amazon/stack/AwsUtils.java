@@ -29,11 +29,11 @@ public class AwsUtils {
     }
 
     public static String getUrlBase() throws IOException {
-        return getStringValue("urlBase", "http://s3.amazonaws.com/");
+        return getStringValue("urlBase", "http://s3.amazonaws.com");
     }
 
     public static String getSecureUrlBase() throws IOException {
-        return getStringValue("secureUrlBase", "https://s3.amazonaws.com:443/");
+        return getStringValue("secureUrlBase", "https://s3.amazonaws.com:443");
     }
 
     private static String getStringValue(final String key) throws IOException {
